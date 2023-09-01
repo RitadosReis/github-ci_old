@@ -1,0 +1,2756 @@
+{
+	"info": {
+		"_postman_id": "85e8aa37-8c40-4be9-9a8f-f0a1e805f3ad",
+		"name": "API-QaCoders",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27403711",
+		"_collection_link": "https://cloudy-satellite-762430.postman.co/workspace/backendqacoders6~d24d51c9-6dcb-49bb-8987-9e30eea749c8/collection/27403711-85e8aa37-8c40-4be9-9a8f-f0a1e805f3ad?action=share&source=collection_link&creator=27403711"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"Isabell\", \r\n    \"mail\": \"qacoderss@academy1-treinamento.com\",\r\n    \"password\": \"Qa789123456#\",\r\n    \"confirmPassword\": \"Qa789123456#\",\r\n    \"accessProfile\": \"Admin\",\r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\" \r\n        }\r\n    ]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"mail\": \"qacoders@academy1-treinamento.com\",\r\n\"password\": \"Qa789123456#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test (\"Salvar Id aleatorio\", function(){\r",
+									"    var id = pm.response.json()\r",
+									"\r",
+									"    id = id[Math.floor(Math.random() * id.length)]\r",
+									"\r",
+									"    pm.environment.set(\"id\", id._id);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Sucessul and Insuccessful manual testing",
+			"item": [
+				{
+					"name": "Sucessul Scheduling",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1788303687,\r\n    \"scheduleEndDate\": 1819839687,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul nameFormScheduling - can be a string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'nameFormScheduling' inválido: deve ser uma string\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"//O campo nome do evento é obrigatório\r",
+									" var nameFormSchedulingEmpty = \"\"\r",
+									"    pm.environment.set(\"nameFormSchedulingEmpty\",nameFormSchedulingEmpty);\r",
+									"\r",
+									"\r",
+									"  //O campo data inicial é obrigatório\r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//O campo data final é obrigatório\r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate);\r",
+									"\r",
+									"//Validação do campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": 11111111111111,\r\n    \"scheduleStartDate\": 1692847550,\r\n    \"scheduleEndDate\": 1692933950,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul nameFormScheduling - cannot be  more than 50 letters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'nameFormScheduling' inválido: deve ter no máximo 50 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"//O campo nome do evento é obrigatório\r",
+									" var nameFormSchedulingEmpty = \"\"\r",
+									"    pm.environment.set(\"nameFormSchedulingEmpty\",nameFormSchedulingEmpty);\r",
+									"\r",
+									"\r",
+									"  //O campo data inicial é obrigatório\r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//O campo data final é obrigatório\r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate);\r",
+									"\r",
+									"//Validação do campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\r\n    \"scheduleStartDate\": 1688738400,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul nameFormScheduling - cannot be null",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo nome do evento é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": null, \r\n    \"scheduleStartDate\": 1688738400,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul nameFormScheduling-  cannot be empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo nome do evento é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"\",\r\n    \"scheduleStartDate\": 1688738400,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleStartDate-  cannot be empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data inicial é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": \"\",\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleStartDate -  cannot be null",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data inicial é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": null,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleStartDate -  cannot be less than 0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleStartDate' inválido: deve ser um número maior que 0.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": \"number\",\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleStartDate - cannot be  more than 15 number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleStartDate' inválido: deve ter no máximo 15 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 123456789987654321,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleEndDate-  cannot be empty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data final é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1688824800,\r\n    \"scheduleEndDate\": \"\",\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleEndDate -  cannot be null",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data final é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1688824800,\r\n    \"scheduleEndDate\": null,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleEndDate -  cannot be less than 0",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleEndDate' inválido: deve ser um número maior que 0.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1688824800 ,\r\n    \"scheduleEndDate\": \"number\",\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleEndDate - cannot be  more than 15 number",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleEndDate' inválido: deve ter no máximo 15 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1688824800,\r\n    \"scheduleEndDate\":123456789987654321,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleImageURL - can be string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleImageURL' inválido: deve ser uma string.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1688738400,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": 111111111, \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul SscheduleImageURL- cannot be  more than 50 letters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleImageURL' inválido: deve ter no máximo 50 caracteres.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1688738400,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://fastly.picsum.photos/id/933/200/300.jpg?grayscale&hmac=wkdO1SD8vr6yRv8wL9FoigKhNuXVNtLAEp_aS1JLfzg\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleStartDate -  cannot be date less than current test date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Não foi possível salvar este agendamento com uma data inicial anterior à data de hoje\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1683554400,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insucessul scheduleEndDate -  cannot be end date before start date",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Não foi possível salvar este agendamento com uma data inicial anterior à data de hoje\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"Evento Mais que importante\",\r\n    \"scheduleStartDate\": 1691503200,\r\n    \"scheduleEndDate\": 1688824800,\r\n    \"scheduleImageURL\": \"https://picsum.photos/200/300\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"Cássia\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:21163/api/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"localhost"
+							],
+							"port": "21163",
+							"path": [
+								"api",
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sucessful and Insuccessful automatic testing",
+			"item": [
+				{
+					"name": "Successful automatic testing",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//Campo data final \r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate)\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"// Validação do campo nameFormScheduling\r",
+									"pm.test(\"Check nameFormScheduling is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"nameFormScheduling\")).to.eql(JSON.parse(responseBody).nameFormScheduling);\r",
+									"});\r",
+									"// Validação do campo scheduleStartDate\r",
+									"pm.test(\"Check ScheduleStartDate is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"scheduleStartDate\")).to.eql(JSON.parse(responseBody).scheduleStartDate);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo scheduleEndDate\r",
+									"pm.test(\"Check ScheduleEndDate is True\", function () {\r",
+									"    pm.expect(pm.variables.get(\"scheduleEndDate\")).to.eql(JSON.parse(responseBody).scheduleEndDate);\r",
+									"});\r",
+									"\r",
+									"// Validação do campo scheduleImageURL\r",
+									"pm.test(\"Check scheduleImageURL is True\", function () {\r",
+									"    pm.expect (\"https://picsum.photos/200/300\").to.eql(JSON.parse(responseBody).scheduleImageURL);\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n                \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - nameFormScheduling can not be empty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"\r",
+									"//O campo nome do evento não pode ser vazio\r",
+									" var nameFormSchedulingEmpty = \"\"\r",
+									"    pm.environment.set(\"nameFormSchedulingEmpty\", nameFormSchedulingEmpty);\r",
+									"\r",
+									"    \r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo nome do evento é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormSchedulingEmpty}}\",\r\n    \"scheduleStartDate\": \"{{scheduleStartDate}}\",\r\n    \"scheduleEndDate\": \"{{scheduleEndDate}}\",\r\n    \"scheduleImageURL\": \"{{scheduleImageUR}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - nameFormScheduling can not be null",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//O campo nome do evento é obrigatório\r",
+									" var nameFormSchedulingNull = null\r",
+									"    pm.environment.set(\"nameFormSchedulingNull\", nameFormSchedulingNull);\r",
+									"\r",
+									"    \r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo nome do evento é obrigatório.\");\r",
+									"    });\r",
+									"\r",
+									"//O campo imagem é obrigatório\r",
+									"\r",
+									"pm.environment.set(\"scheduleImageURL\", pm.variables.replaceIn('{{$randomAvatarImage}}'))"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormSchedulingnull\": \"{{nameFormSchedulingNull}}\",\r\n    \"scheduleStartDate\": \"{{scheduleStartDate}}\",\r\n    \"scheduleEndDate\": \"{{scheduleEndDate}}\",\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - nameFormScheduling can be a string",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"// Nome evento deve ser uma string\r",
+									"pm.environment.set(\"nameFormSchedulingValue\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+									"\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'nameFormScheduling' inválido: deve ser uma string\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": {{nameFormSchedulingValue}},\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - nameFormScheduling must be a maximum of 50 characters",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Parâmetro 'nameFormScheduling' inválido: deve ter no máximo 50 caracteres\r",
+									"\r",
+									"pm.environment.set(\"nameFormSchedulingbigger\", pm.variables.replaceIn('{{$randomLoremParagraph}}'));\r",
+									"\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'nameFormScheduling' inválido: deve ter no máximo 50 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormSchedulingbigger}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleStartDate can not be null",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//O campo data inicial é obrigatório\r",
+									"var nscheduleStartDateNull = null\r",
+									"    pm.environment.set(\"scheduleStartDatenull\",nscheduleStartDateNull);\r",
+									"\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data inicial é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDatenull}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleStarDate can not be empty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									" pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"    //O campo data inicial é obrigatório\r",
+									"  var scheduleStartDateEmpty = \"\"\r",
+									"    pm.environment.set(\"scheduleStartDateEmpty\",scheduleStartDateEmpty); \r",
+									"\r",
+									"    \r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data inicial é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n            \"scheduleStartDate\": \"{{scheduleStartDateEmpty}}\",\r\n    \"scheduleEndDate\": \"{{scheduleEndDate}}\",\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleStarDate can be a number greater than 0",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//O campo data inicial não pode ser menor que 0\r",
+									"function getRandomIntCharacters (min, max) {\r",
+									"min = Math.ceil (1111111111111111111111);\r",
+									"max = Math.floor (-20);\r",
+									"return Math.floor(Math.random() * (max - min + 1)) +  min;\r",
+									"}\r",
+									"pm.environment.set (\"scheduleStartDate\", getRandomIntCharacters()); \r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleStartDate' inválido: deve ter no máximo 15 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Teste scheduleStarDate can be a number greater than 0 Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//O campo data inicial não pode ser menor que 0\r",
+									"function getRandomIntCharacters (min, max) {\r",
+									"min = Math.ceil (0);\r",
+									"max = Math.floor (-20);\r",
+									"return Math.floor(Math.random() * (max - min + 1)) +  min;\r",
+									"}\r",
+									"pm.environment.set (\"scheduleStartDate\", getRandomIntCharacters()); \r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleStartDate' inválido: deve ser um número maior que 0.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleStarDate can not be  before today's date",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//O campo nome do evento\r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//O campo data inicial não pode ser inferior a data atual\r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + (-86400);\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Não foi possível salvar este agendamento com uma data inicial anterior à data de hoje\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleStarDate can be a maximum of 15 characters",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"//O campo data inicial deve ter no máximo 15 caracteres\r",
+									"function getRandomIntCharacters(min, max) {\r",
+									"  min = Math.ceil(1111111111111111);\r",
+									"  max = Math.floor(9999999999999999);\r",
+									"  return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+									"}\r",
+									"pm.environment.set(\"scheduleStartDate\", getRandomIntCharacters());\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleStartDate' inválido: deve ter no máximo 15 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleEndDate can not be less than zero",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"\r",
+									"//O campo data final não pode ser menor que 0\r",
+									"function getRandomIntCharacters (min, max) {\r",
+									"min = Math.ceil (0);\r",
+									"max = Math.floor (-20);\r",
+									"return Math.floor(Math.random() * (max - min + 1)) +  min;\r",
+									"}\r",
+									"pm.environment.set (\"scheduleEndDate\", getRandomIntCharacters()); \r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleEndDate' inválido: deve ser um número maior que 0.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Teste scheduleEndDate can not be less than zero Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"//O campo data final não pode ser menor que 0\r",
+									"function getRandomIntCharacters (min, max) {\r",
+									"min = Math.ceil (0);\r",
+									"max = Math.floor (-20);\r",
+									"return Math.floor(Math.random() * (max - min + 1)) +  min;\r",
+									"}\r",
+									"pm.environment.set (\"scheduleEndDate\", getRandomIntCharacters()); \r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleEndDate' inválido: deve ser um número maior que 0.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleEndDate can be a maximum of 15 characters",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//O campo data final não deve ser maior que 15 caracteres\r",
+									"function getRandomIntCharacters(min, max) {\r",
+									"  min = Math.ceil(1111111111111111);\r",
+									"  max = Math.floor(9999999999999999);\r",
+									"  return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+									"}\r",
+									"pm.environment.set(\"scheduleEndDate\", getRandomIntCharacters());\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleEndDate' inválido: deve ter no máximo 15 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Teste scheduleEndDate can be a maximum of 15 characters Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//O campo data final não deve ser maior que 15 caracteres\r",
+									"function getRandomIntCharacters(min, max) {\r",
+									"  min = Math.ceil(1111111111111111);\r",
+									"  max = Math.floor(9999999999999999);\r",
+									"  return Math.floor(Math.random() * (max - min + 1)) + min;\r",
+									"}\r",
+									"pm.environment.set(\"scheduleEndDate\", getRandomIntCharacters());\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleEndDate' inválido: deve ter no máximo 15 caracteres\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleEndDate end date cannot be earlier than start date",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"//Salva de forma aleatória a data inicial\r",
+									"const dataInicial = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataInicial +   31556926;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//Salva de forma aleatória a data final\r",
+									"const dataFinal = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFinal + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate)\r",
+									"\r",
+									"// Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Não foi possível salvar este agendamento com uma data final anterior à data inicial\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleEndDate can not be null",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//O campo nome do evento \r",
+									" pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									" \r",
+									" \r",
+									"  //Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//O campo data final não pode ser nulo\r",
+									"var nscheduleEndDateNull = null\r",
+									"    pm.environment.set(\"scheduleEndDatenull\",nscheduleEndDateNull);\r",
+									"\r",
+									"    // Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data final é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDatenull}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleEndDate can not be empty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento\r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//O campo data final não pode ser vazio\r",
+									"var scheduleEndDateEmpty = \"\"\r",
+									"    pm.environment.set(\"scheduleEndDateEmpty\",scheduleEndDateEmpty);\r",
+									"\r",
+									"    // Campo scheduleImageURL\r",
+									"const imagem = \"https://picsum.photos/200/300\"; \r",
+									"pm.environment.set(\"scheduleImageURL\", imagem )\r",
+									"\r",
+									"\r",
+									"  \r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"O campo data final é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": \"{{scheduleEndDateEmpty}}\",\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleImageURL can be a maximum of 50 characters",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//Campo data final \r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate)\r",
+									"\r",
+									"// O campo scheduleImageURL não pode conter mais que 50 caracteres\r",
+									"pm.environment.set(\"scheduleImageURL\", pm.variables.replaceIn('{{$randomImageDataUri}}'));\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleImageURL' inválido: deve ter no máximo 50 caracteres.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Teste  scheduleImageURL can be a maximum of 50 characters Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"// O campo scheduleImageURL não pode conter mais que 50 caracteres\r",
+									"pm.environment.set(\"scheduleImageURL\", pm.variables.replaceIn('{{$randomImageDataUri}}'));\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleImageURL' inválido: deve ter no máximo 50 caracteres.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURL}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleImageURL can be a string",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//Campo data final \r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate)\r",
+									"\r",
+									"// O campo scheduleImageURL tem que ser uma string\r",
+									"pm.environment.set(\"scheduleImageURL\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { alert } = pm.response.json()\r",
+									"    pm.expect(alert[0]).to.equal (\"Parâmetro 'scheduleImageURL' inválido: deve ser uma string.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": {{scheduleImageURL}}, \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleImageURL can not be empty",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//Campo data final\r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate)\r",
+									"\r",
+									"// Campo scheduleImageURL não ser vazio\r",
+									"var scheduleImageURLEmpty = \"\"\r",
+									"    pm.environment.set(\"scheduleImageURLEmpty\",scheduleImageURLEmpty); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { errors } = pm.response.json()\r",
+									"    pm.expect(errors[0]).to.equal (\"O campo 'scheduleImageURL' é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": \"{{scheduleImageURLEmpty}}\", \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insuccessful automatic testing - scheduleImageURL can not be null",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Login User\r",
+									"pm.environment.set(\"loginUser\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+									"\r",
+									"//Campo nome do evento \r",
+									"pm.environment.set(\"nameFormScheduling\", pm.variables.replaceIn('{{$randomFullName}}'));\r",
+									"\r",
+									"\r",
+									"//Campo data inicial \r",
+									"const dataAtual = Math.floor(Date.now() / 1000);\r",
+									"const startDate = dataAtual + 600;\r",
+									"pm.environment.set(\"scheduleStartDate\", startDate);\r",
+									"\r",
+									"//Campo data final \r",
+									"const dataFutura = Math.floor(Date.now() / 1000);\r",
+									"const endDate = dataFutura + 86400;\r",
+									"pm.environment.set(\"scheduleEndDate\", endDate)\r",
+									"\r",
+									"// o campo scheduleImageURL não pode ser nulo\r",
+									"var scheduleImageURLNull = null\r",
+									"    pm.environment.set(\"scheduleImageURLnull\",scheduleImageURLNull);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Validação do Status Code para criação\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"correct message\", function () {\r",
+									"    const { errors } = pm.response.json()\r",
+									"    pm.expect(errors[0]).to.equal (\"O campo 'scheduleImageURL' é obrigatório.\");\r",
+									"    })\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nameFormScheduling\": \"{{nameFormScheduling}}\",\r\n    \"scheduleStartDate\": {{scheduleStartDate}},\r\n    \"scheduleEndDate\": {{scheduleEndDate}},\r\n    \"scheduleImageURL\": {{scheduleImageURLnull}}, \r\n    \"audit\": [\r\n        {\r\n            \"loginUser\": \"{{loginUser}}\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/schedulings/64b86c55c50e9013e0d9eca9",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"schedulings",
+								"64b86c55c50e9013e0d9eca9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGYyM2MzMjllMDBjYzcxNjIwZmE2NjgiLCJyZWdpc3RyYXRpb24iOiJRYUNvZGVycy0wMDA0IiwiZnVsbE5hbWUiOiJJc2FiZWxsIiwibWFpbCI6InFhY29kZXJzc0BhY2FkZW15MS10cmVpbmFtZW50by5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQueU9FYWhhYUtCMjFHd3dibkFDOEtPc2xkdzhsZFlaTnN4QVJsWnpGeXJaaFh5eE5pZWlOZSIsImFjY2Vzc1Byb2ZpbGUiOiJBZG1pbiIsImlkQ29tcGFueSI6IiIsInN0YXR1cyI6dHJ1ZSwiYXVkaXQiOlt7InJlZ2lzdHJhdGlvbkRhdGUiOiJGcmkgU2VwIDAxIDIwMjMgMTY6MzI6MDIgR01ULTAzMDAgKEhvcsOhcmlvIFBhZHLDo28gZGUgQnJhc8OtbGlhKSIsImxvZ2luVXNlciI6IkPDoXNzaWEiLCJfaWQiOiI2NGYyM2MzMjllMDBjYzcxNjIwZmE2NjkifV0sIl9fdiI6MCwiaWF0IjoxNjkzNTk2NzIyLCJleHAiOjE2OTM2ODMxMjJ9.vmieEi56iBzrp5Rc_1MxLhISjKGFj-PO0zW-ZsjL0Yg",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
